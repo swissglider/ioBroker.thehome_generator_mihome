@@ -1,0 +1,72 @@
+{
+    "common": {
+        "name": "thehome_generator_mihome",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "The Home - Generator - MiHome",
+        "titleLang": {
+            "en": "The Home - Generator - MiHome",
+            "de": "Der Home - Generator - MiHome",
+            "ru": "Дом - Генератор - MiHome",
+            "pt": "A Casa - Gerador - MiHome",
+            "nl": "Het huis - Generator - MiHome",
+            "fr": "La Maison - Générateur - MiHome",
+            "it": "La Casa - Generatore - MiHome",
+            "es": "El Hogar - Generador - MiHome",
+            "pl": "Dom - Generator - MiHome",
+            "zh-cn": "家 - 发电机 - 米家"
+        },
+        "desc": {
+            "en": "This is the The Home - Generator Adapter for MiHome",
+            "de": "Dies ist der The Home - Generator Adapter für MiHome",
+            "ru": "Это дом - адаптер генератора для MiHome",
+            "pt": "Este é o The Home - Generator Adapter for MiHome",
+            "nl": "Dit is de The Home - Generator Adapter voor MiHome",
+            "fr": "Voici l'adaptateur The Home - Générateur pour MiHome",
+            "it": "Questo è il The Home - Adattatore per generatore per MiHome",
+            "es": "Este es el adaptador The Home - Generator para MiHome",
+            "pl": "To jest The Home - Adapter generatora do MiHome",
+            "zh-cn": "这就是 The Home - MiHome 的发电机适配器"
+        },
+        "authors": ["Swissglider <npm@mailschweiz.com>"],
+        "keywords": ["theHome", "swissglider", "generator"],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "build/main.js",
+        "icon": "thehome_generator_mihome.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/swissglider/ioBroker.thehome_generator_mihome/main/admin/thehome_generator_mihome.png",
+        "readme": "https://github.com/swissglider/ioBroker.thehome_generator_mihome/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "iot-systems",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
