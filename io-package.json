@@ -57,9 +57,29 @@
         "connectionType": "local",
         "dataSource": "poll",
         "materialize": true,
+        "localLink": "%web_protocol%://%ip%:%web_port%/thehome_generator_mihome/index.html",
+        "welcomeScreen": [
+            {
+                "link": "thehome_generator_mihome/index.html",
+                "name": "thehome_generator_mihome",
+                "img": "thehome_generator_mihome/img/device-availability.png",
+                "color": "#ffe9c8",
+                "order": 0
+            }
+        ],
+        "messagebox": true,
+        "adminUI": {
+            "config": "json"
+        },
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.25",
+                "web": ">=3.4.16"
+            }
+        ],
         "dependencies": [
             {
-                "js-controller": ">=2.0.0"
+                "js-controller": ">=3.3.0"
             }
         ]
     },
