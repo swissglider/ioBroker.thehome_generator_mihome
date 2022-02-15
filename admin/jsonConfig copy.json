@@ -1,0 +1,130 @@
+{
+    "type": "panel",
+    "label": {
+        "en": "Allgemeine Konfiguration",
+        "de": "general setting"
+    },
+    "items": {
+        "_title": {
+            "type": "header",
+            "text": {
+                "en": "Die Cloud Konfiguration für << The Home - Generator Adapter for MiHome >>",
+                "de": "The cloud settings for << The Home - Generator Adapter for MiHome >>"
+            },
+            "size": 1,
+            "sm": 12,
+            "md": 12,
+            "lg": 12
+        },
+        "_instance_title": {
+            "newLine": true,
+            "type": "staticText",
+            "label": {
+                "en": "select adapter instance",
+                "de": "Wähle Adapter Instanz"
+            },
+            "sm": 4,
+            "md": 4,
+            "lg": 4
+        },
+        "_adapter_instance": {
+            "type": "selectSendTo",
+            "command": "getInstanceNumbers",
+            "noTranslation": true,
+            "sm": 8,
+            "md": 8,
+            "lg": 8,
+            "disabled": "!_alive"
+        },
+        "_panel0": {
+            "type": "panel",
+            "label": {
+                "en": "Instance 0",
+                "de": "Instanz 0"
+            },
+            "disabled": "data._adapter_instance === 0",
+            "hidden": "data._adapter_instance === 0",
+            "collapsable": true,
+            "items": {
+                "mihome_cloud_username_0": {
+                    "newLine": true,
+                    "type": "text",
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": {
+                        "en": "MiHome Cloud Benutzer-Name",
+                        "de": "MiHome cloud username"
+                    },
+                    "disabled": "!_alive",
+                    "readOnly": false
+                },
+                "mihome_cloud_password_0": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": {
+                        "en": "MiHome Cloud Passwort",
+                        "de": "MiHome cloud password"
+                    },
+                    "disabled": "!_alive"
+                },
+                "mihome_country_0": {
+                    "type": "select",
+                    "i18n": true,
+                    "options": [
+                        {
+                            "label": {
+                                "en": "Germany",
+                                "de": "Deutschland"
+                            },
+                            "value": "de"
+                        },
+                        {
+                            "label": {
+                                "en": "China",
+                                "de": "China"
+                            },
+                            "value": "cn"
+                        },
+                        {
+                            "label": {
+                                "en": "all",
+                                "de": "Alle"
+                            },
+                            "value": ""
+                        }
+                    ],
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": {
+                        "en": "MiHome Cloud Land",
+                        "de": "MiHome cloud country"
+                    },
+                    "disabled": "!_alive"
+                },
+                "_generate_token": {
+                    "newLine": true,
+                    "variant": "contained",
+                    "color": "primary",
+                    "type": "sendTo",
+                    "command": "testAndShowToken",
+                    "disabled": "!_alive, !data.mihome_cloud_username_0, !data.mihome_cloud_username_0",
+                    "jsonData": "{\"config\": {\"login\": \"${data.mihome_cloud_username_0}\", \"password\": \"${data.mihome_cloud_password_0}\", \"country\": \"${data.mihome_country_0}\", \"instance\": \"${data._adapter_instance}\"}}",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "label": {
+                        "en": "Teste Konfiguration und zeige Cloud Token für Instanz 0",
+                        "de": "test settings and show cloud token for instance 0"
+                    },
+                    "result": { "data": { "_mihome_token": "All ok" } }
+                }
+            }
+        }
+    }
+}

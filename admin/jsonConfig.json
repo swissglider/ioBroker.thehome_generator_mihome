@@ -1,221 +1,380 @@
 {
-    "i18n": true,
-    "type": "tabs",
+    "type": "panel",
+    "label": {
+        "en": "Allgemeine Konfiguration",
+        "de": "general setting"
+    },
     "items": {
-        "_general": {
+        "_title": {
+            "type": "header",
+            "text": {
+                "en": "Die Cloud Konfiguration für << The Home - Generator Adapter for MiHome >>",
+                "de": "The cloud settings for << The Home - Generator Adapter for MiHome >>"
+            },
+            "size": 1,
+            "sm": 12,
+            "md": 12,
+            "lg": 12
+        },
+        "adapterInstance": {
+            "type": "selectSendTo",
+            "command": "getInstanceNumbers",
+            "noTranslation": true,
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "disabled": "!_alive",
+            "doNotSave": true,
+            "label": {
+                "en": "select adapter instance",
+                "de": "Wähle Adapter Instanz"
+            }
+        },
+        "_panel0": {
             "type": "panel",
-            "label": "General settings",
+            "label": {
+                "en": "Instance 0",
+                "de": "Instanz 0"
+            },
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "collapsable": true,
+            "hidden": "!(data.adapterInstance === 0)",
             "items": {
-                "protocol": {
+                "mihome_cloud_username_0": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": {
+                        "en": "MiHome Cloud Benutzer-Name",
+                        "de": "MiHome cloud username"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_cloud_password_0": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "label": {
+                        "en": "MiHome Cloud Passwort",
+                        "de": "MiHome cloud password"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_country_0": {
                     "type": "select",
                     "options": [
                         {
                             "label": {
-                                "en": "CoAP and HTTP",
-                                "de": "CoAP und HTTP",
-                                "ru": "CoAP и HTTP",
-                                "pt": "CoAP e HTTP",
-                                "nl": "CoAP en HTTP",
-                                "fr": "CoAP et HTTP",
-                                "it": "CoAP e HTTP",
-                                "es": "CoAP y HTTP",
-                                "pl": "CoAP i HTTP",
-                                "zh-cn": "CoAP 和 HTTP"
+                                "en": "Germany",
+                                "de": "Deutschland"
                             },
-                            "value": "coap"
+                            "value": "de"
                         },
                         {
                             "label": {
-                                "en": "MQTT and HTTP",
-                                "de": "MQTT und HTTP",
-                                "ru": "MQTT и HTTP",
-                                "pt": "MQTT e HTTP",
-                                "nl": "MQTT en HTTP",
-                                "fr": "MQTT et HTTP",
-                                "it": "MQTT e HTTP",
-                                "es": "MQTT y HTTP",
-                                "pl": "MQTT i HTTP",
-                                "zh-cn": "MQTT 和 HTTP"
+                                "en": "China",
+                                "de": "China"
                             },
-                            "value": "mqtt"
+                            "value": "cn"
+                        },
+                        {
+                            "label": {
+                                "en": "all",
+                                "de": "Alle"
+                            },
+                            "value": ""
                         }
                     ],
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "Shelly protocol"
-                },
-                "httpusername": {
-                    "newLine": true,
-                    "type": "text",
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "HTTP Username"
-                },
-                "httppassword": {
-                    "type": "password",
-                    "repeat": false,
-                    "visible": true,
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "HTTP Password"
-                },
-                "polltime": {
-                    "newLine": true,
-                    "type": "number",
-                    "min": 5,
-                    "max": 86400,
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "Poll time in seconds"
-                },
-                "autoupdate": {
-                    "newLine": true,
-                    "type": "checkbox",
-                    "sm": 12,
-                    "md": 12,
-                    "lg": 12,
-                    "label": "Auto update of new firmware"
-                },
-                "updateUnchangedObjects": {
-                    "newLine": true,
-                    "type": "checkbox",
-                    "sm": 12,
-                    "md": 12,
-                    "lg": 12,
-                    "label": "Update objects even if there is no value change"
-                }
-            }
-        },
-        "_mqtt": {
-            "type": "panel",
-            "label": "MQTT settings",
-            "items": {
-                "bind": {
-                    "newLine": true,
-                    "type": "ip",
-                    "listenOnAllPorts": true,
-                    "sm": 12,
-                    "md": 8,
-                    "lg": 6,
-                    "label": "MQTT Listen IP"
-                },
-                "port": {
-                    "type": "number",
-                    "min": 1,
-                    "max": 65535,
+                    "label": {
+                        "en": "MiHome Cloud Land",
+                        "de": "MiHome cloud country"
+                    },
                     "sm": 12,
                     "md": 4,
-                    "lg": 1,
-                    "label": "Port"
+                    "lg": 4
                 },
-                "mqttusername": {
+                "_generate_token_0": {
+                    "newLine": true,
+                    "variant": "contained",
+                    "color": "primary",
+                    "type": "sendTo",
+                    "command": "testAndShowToken",
+                    "disabled": "!_alive, !data.mihome_cloud_username_0, !data.mihome_cloud_password_0, !data.mihome_country_0",
+                    "jsonData": "{\"config\": {\"login\": \"${data.mihome_cloud_username_0}\",\"password\": \"${data.mihome_cloud_password_0}\",\"country\": \"${data.mihome_country_0}\", \"instance\": ${data.adapterInstance}}}",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "label": {
+                        "en": "Teste Konfiguration und zeige Cloud Token für Instanz 0",
+                        "de": "test settings and show cloud token for instance 0"
+                    },
+                    "result": { "data": { "_mihome_token": "All ok" } }
+                }
+            }
+        },
+        "_panel1": {
+            "type": "panel",
+            "label": {
+                "en": "Instance 1",
+                "de": "Instanz 1"
+            },
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "collapsable": true,
+            "hidden": "!(data.adapterInstance === 1)",
+            "items": {
+                "mihome_cloud_username_1": {
                     "newLine": true,
                     "type": "text",
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "MQTT Username"
+                    "label": {
+                        "en": "MiHome Cloud Benutzer-Name",
+                        "de": "MiHome cloud username"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
                 },
-                "mqttpassword": {
+                "mihome_cloud_password_1": {
                     "type": "password",
                     "repeat": false,
                     "visible": true,
-                    "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "MQTT Password"
+                    "label": {
+                        "en": "MiHome Cloud Passwort",
+                        "de": "MiHome cloud password"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
                 },
-                "qos": {
-                    "newLine": true,
+                "mihome_country_1": {
                     "type": "select",
                     "options": [
                         {
                             "label": {
-                                "en": "0 - At most once",
-                                "de": "0 - Höchstens einmal",
-                                "ru": "0 - Не более одного раза",
-                                "pt": "0 - no máximo uma vez",
-                                "nl": "0 - Maximaal één keer",
-                                "fr": "0 - Au plus une fois",
-                                "it": "0 - Al massimo una volta",
-                                "es": "0: como máximo una vez",
-                                "pl": "0 - Co najwyżej raz",
-                                "zh-cn": "0 - 最多一次"
+                                "en": "Germany",
+                                "de": "Deutschland"
                             },
-                            "value": 0
+                            "value": "de"
                         },
                         {
                             "label": {
-                                "en": "1 - At least once",
-                                "de": "1 - Mindestens einmal",
-                                "ru": "1 - Хотя бы один раз",
-                                "pt": "1 - pelo menos uma vez",
-                                "nl": "1 - Minstens één keer",
-                                "fr": "1 - Au moins une fois",
-                                "it": "1 - Almeno una volta",
-                                "es": "1 - Al menos una vez",
-                                "pl": "1 - Przynajmniej raz",
-                                "zh-cn": "1 - 至少一次"
+                                "en": "China",
+                                "de": "China"
                             },
-                            "value": 1
+                            "value": "cn"
                         },
                         {
                             "label": {
-                                "en": "2 - Exactly once",
-                                "de": "2 - Genau einmal",
-                                "ru": "2 - Ровно один раз",
-                                "pt": "2 - Exatamente uma vez",
-                                "nl": "2 - Precies één keer",
-                                "fr": "2 - Exactement une fois",
-                                "it": "2 - Esattamente una volta",
-                                "es": "2 - Exactamente una vez",
-                                "pl": "2 - Dokładnie raz",
-                                "zh-cn": "2 - 恰好一次"
+                                "en": "all",
+                                "de": "Alle"
                             },
-                            "value": 2
+                            "value": ""
                         }
                     ],
+                    "label": {
+                        "en": "MiHome Cloud Land",
+                        "de": "MiHome cloud country"
+                    },
                     "sm": 12,
-                    "md": 6,
-                    "lg": 6,
-                    "label": "Default QoS"
-                }
-            }
-        },
-        "_coap": {
-            "type": "panel",
-            "label": "CoAP settings",
-            "items": {
-                "coapbind": {
-                    "newLine": true,
-                    "type": "ip",
-                    "listenOnAllPorts": true,
-                    "sm": 12,
-                    "md": 8,
-                    "lg": 6,
-                    "label": "COAP listen IP"
+                    "md": 4,
+                    "lg": 4
                 },
-                "blacklist": {
-                    "type": "table",
+                "_generate_toke_1n": {
+                    "newLine": true,
+                    "variant": "contained",
+                    "color": "primary",
+                    "type": "sendTo",
+                    "command": "testAndShowToken",
+                    "disabled": "!_alive, !data.mihome_cloud_username_1, !data.mihome_cloud_password_1, !data.mihome_country_1",
+                    "jsonData": "{\"config\": {\"login\": \"${data.mihome_cloud_username_1}\",\"password\": \"${data.mihome_cloud_password_1}\",\"country\": \"${data.mihome_country_1}\", \"instance\": ${data.adapterInstance}}}",
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
-                    "label": "Blacklist",
-                    "items": [
+                    "label": {
+                        "en": "Teste Konfiguration und zeige Cloud Token für Instanz 1",
+                        "de": "test settings and show cloud token for instance 1"
+                    },
+                    "result": { "data": { "_mihome_token": "All ok" } }
+                }
+            }
+        },
+        "_panel2": {
+            "type": "panel",
+            "label": {
+                "en": "Instance 2",
+                "de": "Instanz 2"
+            },
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "collapsable": true,
+            "hidden": "!(data.adapterInstance === 2)",
+            "items": {
+                "mihome_cloud_username_2": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": {
+                        "en": "MiHome Cloud Benutzer-Name",
+                        "de": "MiHome cloud username"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_cloud_password_2": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "label": {
+                        "en": "MiHome Cloud Passwort",
+                        "de": "MiHome cloud password"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_country_2": {
+                    "type": "select",
+                    "options": [
                         {
-                            "type": "text",
-                            "attr": "id",
-                            "width": "100%",
-                            "title": "Device Id",
-                            "filter": true,
-                            "sort": true,
-                            "default": ""
+                            "label": {
+                                "en": "Germany",
+                                "de": "Deutschland"
+                            },
+                            "value": "de"
+                        },
+                        {
+                            "label": {
+                                "en": "China",
+                                "de": "China"
+                            },
+                            "value": "cn"
+                        },
+                        {
+                            "label": {
+                                "en": "all",
+                                "de": "Alle"
+                            },
+                            "value": ""
                         }
-                    ]
+                    ],
+                    "label": {
+                        "en": "MiHome Cloud Land",
+                        "de": "MiHome cloud country"
+                    },
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4
+                },
+                "_generate_token_2": {
+                    "newLine": true,
+                    "variant": "contained",
+                    "color": "primary",
+                    "type": "sendTo",
+                    "command": "testAndShowToken",
+                    "disabled": "!_alive, !data.mihome_cloud_username_2, !data.mihome_cloud_password_2, !data.mihome_country_2",
+                    "jsonData": "{\"config\": {\"login\": \"${data.mihome_cloud_username_2}\",\"password\": \"${data.mihome_cloud_password_2}\",\"country\": \"${data.mihome_country_2}\", \"instance\": ${data.adapterInstance}}}",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "label": {
+                        "en": "Teste Konfiguration und zeige Cloud Token für Instanz 2",
+                        "de": "test settings and show cloud token for instance 2"
+                    },
+                    "result": { "data": { "_mihome_token": "All ok" } }
+                }
+            }
+        },
+        "_panel3": {
+            "type": "panel",
+            "label": {
+                "en": "Instance 3",
+                "de": "Instanz 3"
+            },
+            "sm": 12,
+            "md": 12,
+            "lg": 12,
+            "collapsable": true,
+            "hidden": "!(data.adapterInstance === 3)",
+            "items": {
+                "mihome_cloud_username_3": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": {
+                        "en": "MiHome Cloud Benutzer-Name",
+                        "de": "MiHome cloud username"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_cloud_password_3": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "label": {
+                        "en": "MiHome Cloud Passwort",
+                        "de": "MiHome cloud password"
+                    },
+                    "sm": 6,
+                    "md": 4,
+                    "lg": 4
+                },
+                "mihome_country_3": {
+                    "type": "select",
+                    "options": [
+                        {
+                            "label": {
+                                "en": "Germany",
+                                "de": "Deutschland"
+                            },
+                            "value": "de"
+                        },
+                        {
+                            "label": {
+                                "en": "China",
+                                "de": "China"
+                            },
+                            "value": "cn"
+                        },
+                        {
+                            "label": {
+                                "en": "all",
+                                "de": "Alle"
+                            },
+                            "value": ""
+                        }
+                    ],
+                    "label": {
+                        "en": "MiHome Cloud Land",
+                        "de": "MiHome cloud country"
+                    },
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4
+                },
+                "_generate_token_3": {
+                    "newLine": true,
+                    "variant": "contained",
+                    "color": "primary",
+                    "type": "sendTo",
+                    "command": "testAndShowToken",
+                    "disabled": "!_alive, !data.mihome_cloud_username_3, !data.mihome_cloud_password_3, !data.mihome_country_3",
+                    "jsonData": "{\"config\": {\"login\": \"${data.mihome_cloud_username_3}\",\"password\": \"${data.mihome_cloud_password_3}\",\"country\": \"${data.mihome_country_3}\", \"instance\": ${data.adapterInstance}}}",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "label": {
+                        "en": "Teste Konfiguration und zeige Cloud Token für Instanz 3",
+                        "de": "test settings and show cloud token for instance 3"
+                    },
+                    "result": { "data": { "_mihome_token": "All ok" } }
                 }
             }
         }

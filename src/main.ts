@@ -5,6 +5,9 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 import * as utils from '@iobroker/adapter-core';
+import MiHomeCloudConnector from './adapterSpecifig/miHomeCloudConnector';
+import getLegacyAdapterInstances from './generalHelpers/legacyAdapterInstanceGetter';
+import THGeneratorAdapter from './thGeneratorAdapter';
 
 // Load your modules here, e.g.:
 // import * as fs from "fs";
@@ -18,7 +21,7 @@ class ThehomeGeneratorMihome extends utils.Adapter {
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
         // this.on('objectChange', this.onObjectChange.bind(this));
-        // this.on('message', this.onMessage.bind(this));
+        this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
@@ -129,17 +132,56 @@ class ThehomeGeneratorMihome extends utils.Adapter {
     //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
     //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
     //  */
-    // private onMessage(obj: ioBroker.Message): void {
-    //     if (typeof obj === 'object' && obj.message) {
-    //         if (obj.command === 'send') {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info('send command');
+    private async onMessage(obj: ioBroker.Message): Promise<void> {
+        if (obj && obj.command) {
+            switch (obj.command) {
+                // The Home Generator Adapter - General sendTo Functions
+                case 'getMetaData':
+                    const resultGetMetaData = await THGeneratorAdapter.getMetaData(
+                        this,
+                        (obj.message as any).config.instance,
+                        (obj.message as any).config.country,
+                    );
+                    this.sendTo(obj.from, obj.command, resultGetMetaData, obj.callback);
+                    return;
 
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-    //         }
-    //     }
-    // }
+                case 'isReady':
+                    const resultIsReady = await THGeneratorAdapter.isReady(this);
+                    this.sendTo(obj.from, obj.command, resultIsReady, obj.callback);
+                    return;
+
+                // Adapter specific sendTo Functions for Admin
+                case 'getInstanceNumbers':
+                    try {
+                        const adpaterInstances = await getLegacyAdapterInstances(this);
+                        const returnValue = adpaterInstances.map((e, i) => ({ label: i, value: i }));
+                        this.sendTo(obj.from, obj.command, returnValue, obj.callback);
+                    } catch (error) {
+                        this.sendTo(obj.from, obj.command, [{ label: `${error}`, value: 'Error' }], obj.callback);
+                    }
+
+                    return;
+
+                case 'testAndShowToken':
+                    await MiHomeCloudConnector.getToken(obj, this);
+                    return;
+
+                case 'getDeviceList':
+                    await MiHomeCloudConnector.getDeviceList(obj, this);
+                    return;
+
+                default:
+                    this.sendTo(
+                        obj.from,
+                        obj.command,
+                        { result: false, error: `no command for ${obj.command} found on that adapter` },
+                        obj.callback,
+                    );
+                    return;
+            }
+        }
+        this.sendTo(obj.from, obj.command, { result: false, error: `something went wrong` }, obj.callback);
+    }
 }
 
 if (require.main !== module) {

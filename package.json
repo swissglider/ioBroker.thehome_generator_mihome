@@ -18,7 +18,8 @@
     "url": "https://github.com/swissglider/ioBroker.thehome_generator_mihome"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.5.1"
+    "@iobroker/adapter-core": "^2.5.1",
+    "miio-token-extractor": "^1.0.0"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^2.2.2",

@@ -21,10 +21,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = __importStar(require("@iobroker/adapter-core"));
+const miHomeCloudConnector_1 = __importDefault(require("./adapterSpecifig/miHomeCloudConnector"));
+const legacyAdapterInstanceGetter_1 = __importDefault(require("./generalHelpers/legacyAdapterInstanceGetter"));
+const thGeneratorAdapter_1 = __importDefault(require("./thGeneratorAdapter"));
 // Load your modules here, e.g.:
 // import * as fs from "fs";
 class ThehomeGeneratorMihome extends utils.Adapter {
@@ -36,7 +42,7 @@ class ThehomeGeneratorMihome extends utils.Adapter {
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
         // this.on('objectChange', this.onObjectChange.bind(this));
-        // this.on('message', this.onMessage.bind(this));
+        this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
     /**
@@ -129,6 +135,47 @@ class ThehomeGeneratorMihome extends utils.Adapter {
             // The state was deleted
             this.log.info(`state ${id} deleted`);
         }
+    }
+    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
+    // /**
+    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
+    //  */
+    async onMessage(obj) {
+        if (obj && obj.command) {
+            switch (obj.command) {
+                // The Home Generator Adapter - General sendTo Functions
+                case 'getMetaData':
+                    const resultGetMetaData = await thGeneratorAdapter_1.default.getMetaData(this, obj.message.config.instance, obj.message.config.country);
+                    this.sendTo(obj.from, obj.command, resultGetMetaData, obj.callback);
+                    return;
+                case 'isReady':
+                    const resultIsReady = await thGeneratorAdapter_1.default.isReady(this);
+                    this.sendTo(obj.from, obj.command, resultIsReady, obj.callback);
+                    return;
+                // Adapter specific sendTo Functions for Admin
+                case 'getInstanceNumbers':
+                    try {
+                        const adpaterInstances = await (0, legacyAdapterInstanceGetter_1.default)(this);
+                        const returnValue = adpaterInstances.map((e, i) => ({ label: i, value: i }));
+                        this.sendTo(obj.from, obj.command, returnValue, obj.callback);
+                    }
+                    catch (error) {
+                        this.sendTo(obj.from, obj.command, [{ label: `${error}`, value: 'Error' }], obj.callback);
+                    }
+                    return;
+                case 'testAndShowToken':
+                    await miHomeCloudConnector_1.default.getToken(obj, this);
+                    return;
+                case 'getDeviceList':
+                    await miHomeCloudConnector_1.default.getDeviceList(obj, this);
+                    return;
+                default:
+                    this.sendTo(obj.from, obj.command, { result: false, error: `no command for ${obj.command} found on that adapter` }, obj.callback);
+                    return;
+            }
+        }
+        this.sendTo(obj.from, obj.command, { result: false, error: `something went wrong` }, obj.callback);
     }
 }
 if (require.main !== module) {
