@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import GenericApp from '@iobroker/adapter-react/GenericApp';
 import { GenericAppProps, GenericAppSettings } from '@iobroker/adapter-react/types';
 import Loader from '@iobroker/adapter-react/Components/Loader';
-import SkeletonApp, { Skeleton } from '..';
+import { Skeleton } from '..';
 import { useState } from '@hookstate/core';
 
 const IOBStack = ({ genericApp }: { genericApp: GenericApp }): JSX.Element => {
@@ -26,7 +26,7 @@ const IOBStack = ({ genericApp }: { genericApp: GenericApp }): JSX.Element => {
         }
     }, [genericApp.socket.connected]);
 
-    return <>{loadedState.get() ? <SkeletonApp /> : <Loader />}</>;
+    return <>{loadedState.get() ? <Skeleton.SkeletonApp /> : <Loader />}</>;
 };
 
 export class IOBApp extends GenericApp {

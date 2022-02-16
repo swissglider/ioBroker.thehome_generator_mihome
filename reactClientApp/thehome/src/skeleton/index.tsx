@@ -111,5 +111,3 @@ export namespace Skeleton {
         export const MessageBox = MessageBox_;
     }
 }
-
-export default Skeleton.SkeletonApp;

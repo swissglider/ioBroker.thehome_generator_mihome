@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import './App.css';
-import SkeletonApp, { Skeleton } from './skeleton';
+import { Skeleton } from './skeleton';
 import { APP_NAME, IOB_ADAPTER_NAME, IS_IOB_APP, AppStructure } from './AppStructure';
 
 const App = (): JSX.Element => {
@@ -38,7 +38,10 @@ const App = (): JSX.Element => {
     return (
         <>
             {newProps &&
-                React.createElement(iobTestState.get() || !IS_IOB_APP ? SkeletonApp : Skeleton.Apps.IOBApp, newProps)}
+                React.createElement(
+                    iobTestState.get() || !IS_IOB_APP ? Skeleton.SkeletonApp : Skeleton.Apps.IOBApp,
+                    newProps,
+                )}
         </>
     );
 };
