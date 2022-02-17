@@ -6,7 +6,7 @@ import 'jqwidgets-scripts/jqwidgets/styles/jqx.darkblue.css';
 import { useCountryDeviceListGridComponentDetail, useCountryDeviceListGridComponent } from './componentStates';
 import { Downgraded } from '@hookstate/core';
 import { CountryDeviceListScope } from '.';
-import { Skeleton } from '../../skeleton';
+import { Skeleton } from '@swissglider/react_skeleton_framework';
 
 export const CountryDeviceGrid: FC<any> = React.memo(() => {
     const details = useCountryDeviceListGridComponentDetail();

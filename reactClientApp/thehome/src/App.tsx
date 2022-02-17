@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import './App.css';
-import { Skeleton } from './skeleton';
 import { APP_NAME, IOB_ADAPTER_NAME, IS_IOB_APP, AppStructure } from './AppStructure';
+import { Skeleton } from '@swissglider/react_skeleton_framework';
 
 const App = (): JSX.Element => {
     const [newProps, setNewProps] = React.useState<any | undefined>(undefined);
-    const legacyAdapterState = Skeleton.States.useIOBLegacyAdapter();
     const titleState = Skeleton.States.useTitleState();
     const appStructureState = Skeleton.States.useAppStructure();
     const selectedComonent = Skeleton.States.useSelectedComponent();
     const iobTestState = Skeleton.States.useIOBAppTest();
+    const legacyAdapterState = Skeleton.States.useIOBLegacyAdapter();
 
     useEffect(() => {
         titleState.set(APP_NAME);

@@ -5,9 +5,9 @@ import 'jqwidgets-scripts/jqwidgets/styles/jqx.metrodark.css';
 import { DetailBox } from './detailView';
 import { CountryDeviceGrid } from './countryDeviceGrid';
 import { useCountryDeviceListGridComponent } from './componentStates';
-import { Skeleton } from '../../skeleton';
 import { DocumentStore, Menu } from 'grommet-icons';
 import testJsonData from '../../testStack/CountryDeviceList.json';
+import { Skeleton } from '@swissglider/react_skeleton_framework';
 
 export const CountryDeviceListScope = 'CountryDeviceList';
 

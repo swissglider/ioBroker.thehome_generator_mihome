@@ -1,7 +1,8 @@
+import { Skeleton } from '@swissglider/react_skeleton_framework';
 import { Add, DocumentStore, Home, Organization, Technology } from 'grommet-icons';
 import CountryDeviceListComponent from './components/countryDeviceListComponent';
 import HomeComponent from './components/homeComponent';
-import { Skeleton } from './skeleton';
+import testJsonData from './testStack/metaData.json';
 
 export const APP_NAME: string = 'TheHome MiHome Generator';
 
@@ -20,6 +21,7 @@ export const AppStructure: Skeleton.Types.T_AppStructure = {
     MetaData: {
         menuName: 'Meta Data',
         component: Skeleton.Components.MetaDataGridComponent,
+        parameters: { testJsonData: testJsonData },
         mainMenu: true,
         moreMenu: false,
         default: false,
